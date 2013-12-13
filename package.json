@@ -23,6 +23,7 @@
     "url": "https://github.com/mikermcneil/captains-log/issues"
   },
   "dependencies": {
-    "sails-util": "~0.10.0"
+    "sails-util": "~0.10.0",
+    "winston": "0.7.2"
   }
 }
