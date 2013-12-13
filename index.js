@@ -7,8 +7,11 @@ var util = require('sails-util'),
 
 
 /**
- * Logger encapsulates winston, a logging library,
- * to manage logging to different adapters.
+ * Captains Log encapsulates Winston, a project by @indexzero,
+ * the guys and gals over at Nodejitsu, and a vibrant community.
+ * 
+ * More info/docs on Winston:
+ * https://github.com/flatiron/winston
  */
 
 module.exports = function CaptainsLog ( config ) {
