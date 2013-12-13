@@ -21,5 +21,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mikermcneil/captains-log/issues"
+  },
+  "dependencies": {
+    "sails-util": "~0.10.0"
   }
 }
