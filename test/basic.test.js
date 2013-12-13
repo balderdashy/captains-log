@@ -1,25 +1,27 @@
 
 var CaptainsLog = require('../');
-
-var stdoutFixture = require('fixture-stdout');
-
+var StdOutFixture = require('fixture-stdout');
 
 describe('new CaptainsLog with no options', function () {
 
 	before(function () {
 		this.log = new CaptainsLog();
+		this.stdout = new StdOutFixture();
 	});
 
 	describe('log()', function () {
 
 		before(function () {
-			stdoutFixture.capture();
+			this.stdout.capture();
 			this.log();
-			stdoutFixture.release();
+		});
+
+		after(function () {
+			this.stdout.release();
 		});
 
 		it('should write a message to the console', function (){
-
+			
 		});
 
 	});
