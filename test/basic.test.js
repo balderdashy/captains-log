@@ -1,6 +1,8 @@
 
 var CaptainsLog = require('../');
 
+var stdoutFixture = require('fixture-stdout');
+
 
 describe('new CaptainsLog with no options', function () {
 
@@ -10,7 +12,15 @@ describe('new CaptainsLog with no options', function () {
 
 	describe('log()', function () {
 
-		it('should output a message to the console');
+		before(function () {
+			stdoutFixture.capture();
+			this.log();
+			stdoutFixture.release();
+		});
+
+		it('should write a message to the console', function (){
+
+		});
 
 	});
 });
