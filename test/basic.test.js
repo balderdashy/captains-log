@@ -22,12 +22,20 @@ describe('new CaptainsLog with no options', function () {
 		suites.usage(fixtures.log.error, { stderr: 3, stdout: 0 });
 	});
 
-	// Winston writes `warn` and `info` to stdout
+	// Winston writes the rest of its logging methods to stdout
 	describe('log.warn()', function () {
 		suites.usage(fixtures.log.warn, { stderr: 0, stdout: 3 });
 	});
 	describe('log.info()', function () {
 		suites.usage(fixtures.log.info, { stderr: 0, stdout: 3 });
+	});
+	describe('log.verbose()', function () {
+		suites.usage(fixtures.log.verbose, { stderr: 0, stdout: 3 });
+	});
+
+	// This logger introduces a `silly` mode
+	describe('log.silly()', function () {
+		suites.usage(fixtures.log.silly, { stderr: 0, stdout: 3 });
 	});
 });
 

@@ -23,6 +23,24 @@ module.exports = {
 			};
 		},
 
+		silly: function () {
+			var args = Array.prototype.slice.call(arguments);
+			return function () {
+				_recordAll(this);
+				this.log.silly.apply(args);
+				_pauseAll(this);
+			};
+		},
+
+		verbose: function () {
+			var args = Array.prototype.slice.call(arguments);
+			return function () {
+				_recordAll(this);
+				this.log.verbose.apply(args);
+				_pauseAll(this);
+			};
+		},
+
 		info: function () {
 			var args = Array.prototype.slice.call(arguments);
 			return function () {
