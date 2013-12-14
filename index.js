@@ -150,7 +150,7 @@ module.exports = function CaptainsLog ( options ) {
 	logger.warn = logger.warn || logger.error || logger.log;
 	logger.error = logger.error || logger.log;
 	logger.verbose = logger.verbose || logger.log;
-	logger.silly = logger.verbose || logger.log;
+	logger.silly = logger.silly || logger.log;
 
 
 
