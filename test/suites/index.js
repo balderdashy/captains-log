@@ -28,17 +28,12 @@ module.exports = {
 				this.logs.stdout = [];
 			});
 
-			describe('usage ::', function () {
-				it('works with no arguments', logFn() );
-				it('works with one argument', logFn('a thing') );
-				it('works with many arguments', logFn('lots', 'of', 'things') );
-			});
-			describe('usage results ::', function () {
-				it('should have written ' + numWritesExpected + ' things',
-				expect.numWrites({
-					numWrites: numWritesExpected
-				}));
-			});
+			it('works with no arguments', logFn() );
+			it('works with one argument', logFn('a thing') );
+			it('works with many arguments', logFn('lots', 'of', 'things') );
+			it('should have written ' + numWritesExpected + ' things', expect.numWrites({
+				numWrites: numWritesExpected
+			}));
 		},
 
 		/**

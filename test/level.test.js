@@ -3,10 +3,10 @@ var fixtures = require('./fixtures');
 var CaptainsLog = require('../');
 
 
-describe('new CaptainsLog with the log level configured', function () {
+describe('new CaptainsLog with configured', function () {
 	
 
-	describe('level: silent', function () {
+	describe('level (silent)', function () {
 		before(function newLog() {
 			this.log = new CaptainsLog({
 				level: 'silent'
@@ -36,7 +36,7 @@ describe('new CaptainsLog with the log level configured', function () {
 	});
 
 
-	describe('level: error', function () {
+	describe('level (error)', function () {
 		before(function newLog() {
 			this.log = new CaptainsLog({
 				level: 'error'
@@ -65,7 +65,7 @@ describe('new CaptainsLog with the log level configured', function () {
 		});
 	});
 
-	describe('level: warn', function () {
+	describe('level (warn)', function () {
 		before(function newLog() {
 			this.log = new CaptainsLog({
 				level: 'warn'
@@ -94,7 +94,7 @@ describe('new CaptainsLog with the log level configured', function () {
 		});
 	});
 
-	describe('level: debug', function () {
+	describe('level (debug)', function () {
 		before(function newLog() {
 			this.log = new CaptainsLog({
 				level: 'debug'
@@ -123,7 +123,7 @@ describe('new CaptainsLog with the log level configured', function () {
 		});
 	});
 
-	describe('level: info', function () {
+	describe('level (info)', function () {
 		before(function newLog() {
 			this.log = new CaptainsLog({
 				level: 'info'
@@ -152,7 +152,7 @@ describe('new CaptainsLog with the log level configured', function () {
 		});
 	});
 
-	describe('level: verbose', function () {
+	describe('level (verbose)', function () {
 		before(function newLog() {
 			this.log = new CaptainsLog({
 				level: 'verbose'
@@ -181,7 +181,7 @@ describe('new CaptainsLog with the log level configured', function () {
 		});
 	});
 
-	describe('level: silly', function () {
+	describe('level (silly)', function () {
 		before(function newLog() {
 			this.log = new CaptainsLog({
 				level: 'silly'
