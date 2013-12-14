@@ -1,3 +1,7 @@
+/**
+ * Module dependencies
+ */
+var _ = require('lodash');
 var assert = require('assert');
 
 
@@ -6,6 +10,8 @@ var assert = require('assert');
  * `expect`
  */
 function expect () {}
+
+
 
 /**
  * numWritesToStream
@@ -20,8 +26,32 @@ expect.numWritesToStream = function (options) {
 			history.length,
 			options.numWrites,
 			'Unexpected number of writes to ' + options.streamId + ' ' +
-			'(' + history.length + ' instead of ' + options.numWrites + ').' +
-			'\n\tWrites::  '+ '[' + this.logs[options.streamId] + ']'
+			'(' + history.length + ' instead of ' + options.numWrites + ').'
+			// '\n\tWrites::  '+ '[' + history + ']'
+		);
+	};
+};
+
+
+
+/**
+ * numWrites
+ * 
+ * @option  {Finite} numWrites [e.g. 2]
+ */
+expect.numWrites = function (options) {
+	return function () {
+		var history = [];
+		_.each(this.logs, function (streamHistory, streamId) {
+			history = history.concat(streamHistory);
+		});
+
+		assert.equal(
+			history.length,
+			options.numWrites,
+			'Unexpected number of total writes ' +
+			'(' + history.length + ' instead of ' + options.numWrites + ').'
+			// '\n\tWrites::  '+ '[' + history + ']'
 		);
 	};
 };

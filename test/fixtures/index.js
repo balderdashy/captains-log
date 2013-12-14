@@ -14,14 +14,6 @@ var _ = require('lodash');
 module.exports = {
 
 	log: {
-		_call: function () {
-			var args = Array.prototype.slice.call(arguments);
-			return function () {
-				_recordAll(this);
-				this.log.apply(args);				
-				_pauseAll(this);
-			};
-		},
 
 		silly: function () {
 			var args = Array.prototype.slice.call(arguments);
@@ -46,6 +38,15 @@ module.exports = {
 			return function () {
 				_recordAll(this);
 				this.log.info.apply(args);
+				_pauseAll(this);
+			};
+		},
+		
+		_call: function () {
+			var args = Array.prototype.slice.call(arguments);
+			return function () {
+				_recordAll(this);
+				this.log.apply(args);				
 				_pauseAll(this);
 			};
 		},
