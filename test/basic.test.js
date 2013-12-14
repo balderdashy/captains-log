@@ -21,6 +21,14 @@ describe('new CaptainsLog with no options', function () {
 	describe('log.error()', function () {
 		suites.usage(fixtures.log.error, { stderr: 3, stdout: 0 });
 	});
+
+	// Winston writes `warn` and `info` to stdout
+	describe('log.warn()', function () {
+		suites.usage(fixtures.log.warn, { stderr: 0, stdout: 3 });
+	});
+	describe('log.info()', function () {
+		suites.usage(fixtures.log.info, { stderr: 0, stdout: 3 });
+	});
 });
 
 
