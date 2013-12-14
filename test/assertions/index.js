@@ -3,33 +3,28 @@ var assert = require('assert');
 
 
 /**
- * expectThis('varName')
- * 
- * Examine the specified `varName` in the mocha test context (i.e. `this[varName]`)
- * and return a set of assertions for a test user to run.
- */
-function expectThis(varName) {
-	return {
-		 numWrites: function ( expectedNumWrites ) {
-			return function () {
-				assert.equal(
-					this[varName].length,
-					expectedNumWrites,
-					'Unexpected number of writes to ' + varName + ' ' +
-					'(' + this[varName].length + ' instead of ' + expectedNumWrites + ').');
-			};
-		}
-	};
-}
-
-
-
-/**
  * `expect`
  */
 function expect () {}
-expect.numStderrWrites = expectThis('stderr_logs').numWrites;
-expect.numStdoutWrites = expectThis('stdout_logs').numWrites;
+
+/**
+ * expectNumberOfWritesTo
+ * 
+ * @option  {String} streamId [e.g. stderr]
+ * @option  {Finite} numWrites [e.g. 2]
+ */
+expect.numWritesToStream = function (options) {
+	return function () {
+		var history = this.logs[options.streamId];
+		assert.equal(
+			history.length,
+			options.numWrites,
+			'Unexpected number of writes to ' + options.streamId + ' ' +
+			'(' + history.length + ' instead of ' + options.numWrites + ').' +
+			'\n\tWrites::  '+ '[' + this.logs[options.streamId] + ']'
+		);
+	};
+};
 
 
 module.exports = expect;

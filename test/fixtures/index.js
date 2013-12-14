@@ -2,6 +2,8 @@
  * Dependencies
  */
 var Fixture = require('fixture-stdout');
+var _ = require('lodash');
+
 
 
 /**
@@ -12,36 +14,75 @@ var Fixture = require('fixture-stdout');
  */
 module.exports = {
 
+	interceptor: function ( id, stream ) {
+		return {
+			new: function () {
+				this.interceptors[id] = new Fixture(stream);
+				this.logs[id] = [];
+			},
+			empty: function () {
+				this.logs[id] = [];
+			}
+			// record: function ( ) {
+			// 	var self = this;
+			// 	this.interceptors[id].capture(function intercept (string, encoding, fd) {
+			// 		self.logs[id].push(string);
+			// 		return false;
+			// 	});
+			// },
+			// pause: function ( ) {
+			// 	this.interceptors[id].release();
+			// }
+		};
+	},
+
+
+
+
+
 	log: {
-		new: function () {
-			this.stderr = new Fixture(process.stderr);
-			this.stdout = new Fixture(process.stdout);
+		_call: function () {
+			var args = Array.prototype.slice.call(arguments);
+			return function () {
+				_recordAll(this);
+				this.log.apply(args);				
+				_pauseAll(this);
+			};
 		},
 
-		_call: function (data) {
-
-			// Call the log object itself (it's a fn)
+		debug: function () {
+			var args = Array.prototype.slice.call(arguments);
 			return function () {
-
-				var stdout_logs = this.stdout_logs;
-				var stderr_logs = this.stderr_logs;
-				this.stderr.capture(function intercept (string, encoding, fd) {
-					stderr_logs.push(string);
-					return false;
-				});
-				this.stdout.capture(function intercept (string, encoding, fd) {
-					stdout_logs.push(string);
-					return false;
-				});
-
-				// Write log
-				typeof data === 'undefined' ?
-					this.log() :
-					this.log(data);
-					
-				this.stderr.release();
-				this.stdout.release();
+				_recordAll(this);
+				this.log.apply(args);
+				_pauseAll(this);
 			};
 		}
 	}
 };
+
+
+
+
+
+
+
+
+
+// Helpers
+// 
+function _recordAll (ctx) {
+	_.each(ctx.interceptors, function (interceptor, id) {
+		interceptor.capture(function intercept (string, encoding, fd) {
+			ctx.logs[id].push(string);
+			return false;
+		});
+	});
+}
+
+function _pauseAll (ctx) {
+	_.each(ctx.interceptors, function (interceptor, id) {
+		interceptor.release();
+	});
+}
+
