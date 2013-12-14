@@ -18,11 +18,11 @@ describe('new CaptainsLog with configured', function () {
 		describe(': calling log.warn()', function () {
 			suites.console.countWrites(fixtures.log.warn, 0);
 		});
-		describe(': calling log()', function () {
-			suites.console.countWrites(fixtures.log._call, 0);
-		});
 		describe(': calling log.debug()', function () {
 			suites.console.countWrites(fixtures.log.debug, 0);
+		});
+		describe(': calling log()', function () {
+			suites.console.countWrites(fixtures.log._call, 0);
 		});
 		describe(': calling log.info()', function () {
 			suites.console.countWrites(fixtures.log.info, 0);
@@ -48,6 +48,9 @@ describe('new CaptainsLog with configured', function () {
 		describe(': calling log.warn()', function () {
 			suites.console.countWrites(fixtures.log.warn, 0);
 		});
+		describe(': calling log.debug()', function () {
+			suites.console.countWrites(fixtures.log.debug, 0);
+		});
 		describe(': calling log()', function () {
 			suites.console.countWrites(fixtures.log._call, 0);
 		});
@@ -56,9 +59,6 @@ describe('new CaptainsLog with configured', function () {
 		});
 		describe(': calling log.verbose()', function () {
 			suites.console.countWrites(fixtures.log.verbose, 0);
-		});
-		describe(': calling log.debug()', function () {
-			suites.console.countWrites(fixtures.log.debug, 0);
 		});
 		describe(': calling log.silly()', function () {
 			suites.console.countWrites(fixtures.log.silly, 0);
@@ -77,6 +77,9 @@ describe('new CaptainsLog with configured', function () {
 		describe(': calling log.warn()', function () {
 			suites.console.countWrites(fixtures.log.warn, 3);
 		});
+		describe(': calling log.debug()', function () {
+			suites.console.countWrites(fixtures.log.debug, 0);
+		});
 		describe(': calling log()', function () {
 			suites.console.countWrites(fixtures.log._call, 0);
 		});
@@ -85,9 +88,6 @@ describe('new CaptainsLog with configured', function () {
 		});
 		describe(': calling log.verbose()', function () {
 			suites.console.countWrites(fixtures.log.verbose, 0);
-		});
-		describe(': calling log.debug()', function () {
-			suites.console.countWrites(fixtures.log.debug, 0);
 		});
 		describe(': calling log.silly()', function () {
 			suites.console.countWrites(fixtures.log.silly, 0);
@@ -106,6 +106,9 @@ describe('new CaptainsLog with configured', function () {
 		describe(': calling log.warn()', function () {
 			suites.console.countWrites(fixtures.log.warn, 3);
 		});
+		describe(': calling log.debug()', function () {
+			suites.console.countWrites(fixtures.log.debug, 3);
+		});
 		describe(': calling log()', function () {
 			suites.console.countWrites(fixtures.log._call, 3);
 		});
@@ -114,9 +117,6 @@ describe('new CaptainsLog with configured', function () {
 		});
 		describe(': calling log.verbose()', function () {
 			suites.console.countWrites(fixtures.log.verbose, 0);
-		});
-		describe(': calling log.debug()', function () {
-			suites.console.countWrites(fixtures.log.debug, 0);
 		});
 		describe(': calling log.silly()', function () {
 			suites.console.countWrites(fixtures.log.silly, 0);
@@ -138,14 +138,14 @@ describe('new CaptainsLog with configured', function () {
 		describe(': calling log()', function () {
 			suites.console.countWrites(fixtures.log._call, 3);
 		});
+		describe(': calling log.debug()', function () {
+			suites.console.countWrites(fixtures.log.debug, 3);
+		});
 		describe(': calling log.info()', function () {
 			suites.console.countWrites(fixtures.log.info, 3);
 		});
 		describe(': calling log.verbose()', function () {
 			suites.console.countWrites(fixtures.log.verbose, 3);
-		});
-		describe(': calling log.debug()', function () {
-			suites.console.countWrites(fixtures.log.debug, 0);
 		});
 		describe(': calling log.silly()', function () {
 			suites.console.countWrites(fixtures.log.silly, 0);
@@ -164,17 +164,17 @@ describe('new CaptainsLog with configured', function () {
 		describe(': calling log.warn()', function () {
 			suites.console.countWrites(fixtures.log.warn, 3);
 		});
-		describe(': calling log()', function () {
-			suites.console.countWrites(fixtures.log._call, 3);
-		});
 		describe(': calling log.debug()', function () {
 			suites.console.countWrites(fixtures.log.debug, 3);
 		});
-		describe(': calling log.verbose()', function () {
-			suites.console.countWrites(fixtures.log.verbose, 3);
+		describe(': calling log()', function () {
+			suites.console.countWrites(fixtures.log._call, 3);
 		});
 		describe(': calling log.info()', function () {
-			suites.console.countWrites(fixtures.log.info, 3);
+			suites.console.countWrites(fixtures.log.info, 0);
+		});
+		describe(': calling log.verbose()', function () {
+			suites.console.countWrites(fixtures.log.verbose, 0);
 		});
 		describe(': calling log.silly()', function () {
 			suites.console.countWrites(fixtures.log.silly, 0);

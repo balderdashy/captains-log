@@ -114,81 +114,109 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 	// the `options.transports` config.  However, this approach
 	// will replace the built-in transports, so use w/ care.
 	if (	options.transports &&
-			!_.isObject(options.transports)
+			!_.isArray(options.transports)
 		) {
 		throw new Error('Invalid `options.transports`.\n\n' +
-			'Should be an object of transport configurations, e.g.:\n' +
-			'console: {' + '\n' + 
+			'Should be an array of instantiated Winston transports, e.g.:\n' +
+			'new (winston.transports.Console)({' + '\n' + 
 		    '  level: "silly",' + '\n' + 
 		    '  colorize: "true",' + '\n' + 
 		    '  label: "foo"' + '\n' + 
-		    '},' + '\n' + 
-		    'file: {' + '\n' + 
+		    '}),' + '\n' + 
+		    'new (winston.transports.File)({' + '\n' + 
 		    '  filename: "/path/to/some/file"' + '\n' + 
-		    '}'
+		    '})'
 		);
 	}
+
+	// Default log level is `debug`
+	var defaultLogLevel = 'debug';
 
 	// Default transports
 	if ( !options.transports ) {
 
 		var genericOptions = _.cloneDeep(options);
 		_.defaults(genericOptions, {
-			level: 'info'
+			level: defaultLogLevel
 		});
 
-		options.transports = {
-
-			console: _.defaults(genericOptions, {
+		// Build the transports array
+		options.transports = [
+			new (winston.transports.Console)(_.extend({
 				json: false,
 				colorize: true,
 				timestamp: false
-			}),
+			}, genericOptions))
+		];
 
 
-			// TODO:
-			// Consider adding default file log in the future.
-			// (would need to figure out where to stream them)
-			// 
-			// file: {
-			// 	json: true,
-			// 	colorize: false,
-			// 	timestamp: true,
-			// 	maxSize: 10000000,
-			// 	maxFiles: 10
-			// }
-		};
+		// TODO:
+		// Consider adding default file log in the future.
+		// (would need to figure out where to stream them)
+		// 
+		// file: {
+		// 	json: true,
+		// 	colorize: false,
+		// 	timestamp: true,
+		// 	maxSize: 10000000,
+		// 	maxFiles: 10
+		// }
 	}
 
 
-	// Ensure levels on the default winston logger
+	// Default log levels
+	options.logLevels = _.defaults(options.logLevels || {}, {
+		silly: 0,
+		verbose: 1,
+		info: 2,
+		// notice: 2,
+		debug: 3,
+		// alert: 4,
+		warn: 4,
+		// warning: 4,
+		error: 5,
+		// crit: 6,
+		// emerg: 6,
+		// fail: 6,
+		silent: 7
+	});
+
+
+	// Instantiate logger
+	logger = new (winston.Logger)({
+		levels: options.logLevels,
+		transports: options.transports
+	});
+	
+	// Hmm.. this approach doesn't seem to work:
+	// 
+	// Register available transports, adding a category called 'sails'.
+	// winston.loggers.add('sails', options.transports);
+	// Instantiate a logger.  We'll call it the `sails` logger.
+	// logger = winston.loggers.get('sails');
+
+	// Ensure levels on the winston logger
 	// are configured to use npm conventions.
-	// winston.setLevels(options.logLevels || winston.config.npm.levels);
 
 	// Here are the log levels, for reference:
 	/*
 	{
 		silly: 0,
-		debug: 1,
-		verbose: 2,
-		info: 3,
+		verbose: 1,
+		info: 2,
+		debug: 3,
 		warn: 4,
 		error: 5
 	}
 	*/
 
 
-	// Register available transports, adding a category called 'core'.
-	winston.loggers.add('core', options.transports);
-	
-	// Instantiate a logger.  We'll call it the `core` logger.
-	logger = winston.loggers.get('core');
-
-	// Change levels on the new instance of `core` logger
-	// 
 	// TODO: wtf winston??? what is going on here??
+	// (the built-in `npm` levels don't seem to match npm's 
+	// documentation)
 	// 
-	logger.setLevels(options.logLevels || winston.config.npm.levels);
+	// logger.setLevels(options.logLevels || winston.config.npm.levels);
+	// 
 	
 
 	// Return callable version of core logger
@@ -200,14 +228,14 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 	/**
 	 * Return a special version of `logger` which may
 	 * be called directly as a function (implicitly calls
-	 * `logger.info` behind the scenes)
+	 * `logger.debug` behind the scenes)
 	 * 
 	 * @param  {Object} logger [original logger]
 	 * @return {Function}      [callable logger]
 	 */
 	function _buildLogger( logger ) {
 		var _logger = function () {
-			logger.info.call(logger, arguments);
+			logger.debug.call(logger, arguments);
 		};
 		_logger = _.extend(_logger, logger);
 		return _logger;
