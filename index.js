@@ -217,6 +217,8 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 	// 
 	// logger.setLevels(options.logLevels || winston.config.npm.levels);
 	// 
+
+
 	
 
 	// Return callable version of core logger
@@ -232,17 +234,69 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 	 * 
 	 * @param  {Object} logger [original logger]
 	 * @return {Function}      [callable logger]
+	 * @api private
 	 */
 	function _buildLogger( logger ) {
 		var _logger = function () {
 			logger.debug.call(logger, arguments);
 		};
-		_logger = _.extend(_logger, logger);
+
+		// Mix-in log methods, but run `_inspect`
+		// on their arguments to improve the readability
+		// of log output.
+		// 
+		// TODO: make this behavior configurable in `options`
+		// (possibly on a per-transport basis)
+		_logger.error = function () { return logger.error(_inspect.call(arguments)); };
+		_logger.warn = function () { return logger.warn(_inspect.call(arguments)); };
+		_logger.debug = function () { return logger.debug(_inspect.call(arguments)); };
+		_logger.info = function () { return logger.info(_inspect.call(arguments)); };
+		_logger.verbose = function () { return logger.verbose(_inspect.call(arguments)); };
+		_logger.silly = function () { return logger.silly(_inspect.call(arguments)); };
+		
 		return _logger;
 	}
 
 
+
+	/**
+	 * Combine arguments into a string
+	 * @return {String} [a mashup of all arguments]
+	 * @api private
+	 */
+	function _inspect() {
+
+		// Compose `str` of all the arguments
+		var pieces = [];
+		var str = '';
+		_.each(arguments, function(arg) {
+			if (typeof arg === 'object') {
+				if (arg instanceof Error) {
+					pieces.push(arg.stack);
+					return;
+				}
+				pieces.push(util.inspect(arg));
+				return;
+			}
+
+			if (typeof arg === 'function') {
+				pieces.push(arg.valueOf());
+				return;
+			}
+
+			pieces.push(arg);
+		});
+		str = pieces.join(' ');
+		return str;
+	}
+
 };
+
+
+
+
+
+
 
 
 	
@@ -265,9 +319,6 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 	// Export logger object
 	// return log;
 
-
-
-
 	/**
 	 * @returns a configured-level-aware log function
 	 *          at the specified log level
@@ -276,27 +327,6 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 	// function _generateLogFn(level) {
 	// 	return function() {
 
-	// 		// Compose `str` of all the arguments
-	// 		var pieces = [];
-	// 		var str = '';
-	// 		_.each(arguments, function(arg) {
-	// 			if (typeof arg === 'object') {
-	// 				if (arg instanceof Error) {
-	// 					pieces.push(arg.stack);
-	// 					return;
-	// 				}
-	// 				pieces.push(util.inspect(arg));
-	// 				return;
-	// 			}
-
-	// 			if (typeof arg === 'function') {
-	// 				pieces.push(arg.valueOf());
-	// 				return;
-	// 			}
-
-	// 			pieces.push(arg);
-	// 		});
-	// 		str = pieces.join(' ');
 
 	// 		var fn = logger[level];
 	// 		fn(str);
