@@ -24,10 +24,10 @@
   },
   "dependencies": {
     "sails-util": "~0.10.0",
-    "winston": "0.7.2"
+    "winston": "0.7.2",
+    "lodash": "~2.4.1"
   },
   "devDependencies": {
-    "lodash": "~2.4.1",
     "fixture-stdout": "0.2.0"
   }
 }
