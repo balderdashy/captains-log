@@ -182,12 +182,115 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 	});
 
 
+	
 	// Instantiate logger
 	logger = new (winston.Logger)({
 		levels: options.logLevels,
 		transports: options.transports
 	});
 	
+
+	// Return callable version of core logger
+	return _buildLogger(logger);
+
+
+
+
+	/**
+	 * Return a special version of `logger` which may
+	 * be called directly as a function (implicitly calls
+	 * `logger.debug` behind the scenes)
+	 * 
+	 * @param  {Object} logger [original logger]
+	 * @return {Function}      [callable logger]
+	 * @api private
+	 */
+	function _buildLogger( logger ) {
+
+		// Make base logger callable (debug)
+		var _logger = _inspect(logger.debug);
+
+		// Mix-in log methods, but run `_inspect`
+		// on their arguments to improve the readability
+		// of log output.
+		_logger.error = _inspect(logger.error);
+		_logger.warn = _inspect(logger.warn);
+		_logger.debug = _inspect(logger.debug);
+		_logger.info = _inspect(logger.info);
+		_logger.verbose = _inspect(logger.verbose);
+		_logger.silly = _inspect(logger.silly);
+		
+		return _logger;
+	}
+
+
+
+	/**
+	 * Build a log function which combines arguments into a string,
+	 * enhancing them for readability.
+	 *
+	 * TODO: make this behavior configurable in `options` 
+	 * in the future (possibly on a per-transport basis)
+	 * 
+	 * @return {Function} [log fn]
+	 * @api private
+	 */
+	function _inspect( logFn ) {
+		return function () {
+
+			// Compose `str` of all the arguments
+			var pieces = [];
+			var str = '';
+			_.each(arguments, function(arg) {
+				if (typeof arg === 'object') {
+					if (arg instanceof Error) {
+						pieces.push(arg.stack);
+						return;
+					}
+					pieces.push(util.inspect(arg));
+					return;
+				}
+
+				if (typeof arg === 'function') {
+					pieces.push(arg.valueOf());
+					return;
+				}
+
+				pieces.push(arg);
+			});
+			str = pieces.join(' ');
+			logFn.apply(logFn, [str]);
+		};
+	}
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// Hmm.. this approach doesn't seem to work:
 	// 
 	// Register available transports, adding a category called 'sails'.
@@ -219,87 +322,13 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 	// 
 
 
-	
-
-	// Return callable version of core logger
-	return _buildLogger(logger);
-
-
-
-
-	/**
-	 * Return a special version of `logger` which may
-	 * be called directly as a function (implicitly calls
-	 * `logger.debug` behind the scenes)
-	 * 
-	 * @param  {Object} logger [original logger]
-	 * @return {Function}      [callable logger]
-	 * @api private
-	 */
-	function _buildLogger( logger ) {
-		var _logger = function () {
-			logger.debug.call(logger, arguments);
-		};
-
-		// Mix-in log methods, but run `_inspect`
-		// on their arguments to improve the readability
-		// of log output.
-		// 
-		// TODO: make this behavior configurable in `options`
-		// (possibly on a per-transport basis)
-		_logger.error = function () { return logger.error(_inspect.call(arguments)); };
-		_logger.warn = function () { return logger.warn(_inspect.call(arguments)); };
-		_logger.debug = function () { return logger.debug(_inspect.call(arguments)); };
-		_logger.info = function () { return logger.info(_inspect.call(arguments)); };
-		_logger.verbose = function () { return logger.verbose(_inspect.call(arguments)); };
-		_logger.silly = function () { return logger.silly(_inspect.call(arguments)); };
-		
-		return _logger;
-	}
-
-
-
-	/**
-	 * Combine arguments into a string
-	 * @return {String} [a mashup of all arguments]
-	 * @api private
-	 */
-	function _inspect() {
-
-		// Compose `str` of all the arguments
-		var pieces = [];
-		var str = '';
-		_.each(arguments, function(arg) {
-			if (typeof arg === 'object') {
-				if (arg instanceof Error) {
-					pieces.push(arg.stack);
-					return;
-				}
-				pieces.push(util.inspect(arg));
-				return;
-			}
-
-			if (typeof arg === 'function') {
-				pieces.push(arg.valueOf());
-				return;
-			}
-
-			pieces.push(arg);
-		});
-		str = pieces.join(' ');
-		return str;
-	}
-
-};
-
-
-
-
-
-
-
 
 	
+
+
+
+
+
 	// new (winston.Logger)({
 	// 	transports: transports
 	// });
