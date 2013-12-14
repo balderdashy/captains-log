@@ -8,7 +8,7 @@ var assert = require('assert');
 function expect () {}
 
 /**
- * expectNumberOfWritesTo
+ * numWritesToStream
  * 
  * @option  {String} streamId [e.g. stderr]
  * @option  {Finite} numWrites [e.g. 2]
