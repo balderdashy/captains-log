@@ -1,28 +1,29 @@
-
+var fixtures = require('./fixtures');
+var expect	= require('./assertions');
 var CaptainsLog = require('../');
-var StdOutFixture = require('fixture-stdout');
 
 describe('new CaptainsLog with no options', function () {
-
+	before(fixtures.log.new);
 	before(function () {
+		this.stdout_logs = [];
+		this.stderr_logs = [];
 		this.log = new CaptainsLog();
-		this.stdout = new StdOutFixture();
 	});
 
-	describe('log()', function () {
+	describe('usage ::', function () {
 
-		before(function () {
-			this.stdout.capture();
-			this.log();
+		describe('log()', function () {
+			before( fixtures.log._call() );
+			before( fixtures.log._call('second thing') );
+			before( fixtures.log._call('third thing') );
+
+			it('should have written 3 times to stderr', expect.numStderrWrites(3));
+			it('should write a message to the console', expect.numStdoutWrites(0));
 		});
 
-		after(function () {
-			this.stdout.release();
-		});
-
-		it('should write a message to the console', function (){
-			
-		});
 
 	});
 });
+
+
+

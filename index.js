@@ -2,7 +2,8 @@
  * Module dependencies.
  */
 
-var util = require('sails-util'),
+var _ = require('lodash'),
+	util = require('util'),
 	winston = require('winston');
 
 
@@ -14,48 +15,64 @@ var util = require('sails-util'),
  * https://github.com/flatiron/winston
  */
 
-module.exports = function CaptainsLog ( config ) {
+module.exports = function CaptainsLog ( options ) {
 	var self = this;
-	config = util.merge({
+
+	if (typeof options !== 'object') {
+		options = {};
+	}
+
+	/**
+	 * Options
+	 *
+	 * @option level		[log level]
+	 * @option transports	[array of transport configs to use]
+	 * @option maxSize		[]
+	 * @option maxFiles		[]
+	 * @option colorize		[]
+	 * 
+	 * @type {Object}
+	 */
+
+	// Default options
+	_.defaults(options, {
 		level: 'info',
+		transports: [{
+			transport: 'console'
+		}],
 		maxSize: 10000000,
 		maxFiles: 10,
 		json: false,
-		colorize: true,
-		consoleLevel: 'undefined',
-		fileLevel: 'undefined'
-	}, config || {});
+		colorize: true
+	});
 
-	if (config.consoleLevel === 'undefined') {
-	    config.consoleLevel = config.level;
-	}
-	if (config.fileLevel === 'undefined') {
-	    config.fileLevel = config.level;
-	}
-
-	// Available transports
-	var transports = [
-		new(winston.transports.Console)({
-			level: config.consoleLevel,
-			colorize: config.colorize
-		})
-	];
+	
 
 	// If filePath option is set, ALSO write log output to a flat file
-	if (!util.isUndefined(config.filePath)) {
+	if (!_.isUndefined(options.filePath)) {
 		transports.push(
 			new(winston.transports.File)({
-				filename: config.filePath,
-				maxsize: config.maxSize,
-				maxFiles: config.maxFiles,
-				level: config.fileLevel,
-				json: config.json,
+				filename: options.filePath,
+				maxsize: options.maxSize,
+				maxFiles: options.maxFiles,
+				level: options.level,
+				json: options.json,
 				colorize: false,
 				stripColors: true
 			}));
 	}
 
-	var logLevels = {
+
+	// Winston's available transports
+	var transports = [
+		new(winston.transports.Console)({
+			level: options.level,
+			colorize: options.colorize
+		})
+	];
+
+	// Winston's log levels
+	var winstonLogLevels = {
 	    silly: 0,
 	    verbose: 1,
 	    info: 2,
@@ -71,6 +88,7 @@ module.exports = function CaptainsLog ( config ) {
 	    silent: 7
 	};
 
+	// Colors to use for various log levels
 	var logColors = {
 	    silly: 'cyan',
 	    verbose: 'cyan',
@@ -88,8 +106,8 @@ module.exports = function CaptainsLog ( config ) {
 	};
 
 	// if adapter option is set, ALSO write log output to an adapter
-	if (!util.isUndefined(config.adapters)) {
-		util.each(config.adapters, function(val, transport) {
+	if (!_.isUndefined(options.adapters)) {
+		_.each(options.adapters, function(val, transport) {
 			if (typeof val.module !== 'undefined') {
 
 				// The winston module MUST be exported to a variable of same name
@@ -108,7 +126,7 @@ module.exports = function CaptainsLog ( config ) {
 
 	// Instantiate winston
 	var logger = new(winston.Logger)({
-		levels: logLevels,
+		levels: winstonLogLevels,
 		colors: logColors,
 		transports: transports
 	});
@@ -165,7 +183,7 @@ module.exports = function CaptainsLog ( config ) {
 			// Compose `str` of all the arguments
 			var pieces = [];
 			var str = '';
-			util.each(arguments, function(arg) {
+			_.each(arguments, function(arg) {
 				if (typeof arg === 'object') {
 					if (arg instanceof Error) {
 						pieces.push(arg.stack);

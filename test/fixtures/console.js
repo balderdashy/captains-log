@@ -6,6 +6,8 @@
  */
 
 
+// NOTE: currently unused.
+
 var FakeConsole = function () {
 
 	var _stack = [];
