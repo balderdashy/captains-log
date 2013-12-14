@@ -29,13 +29,15 @@ describe('new CaptainsLog with no options', function () {
 	describe('log.info()', function () {
 		suites.usage(fixtures.log.info, { stderr: 0, stdout: 3 });
 	});
-	describe('log.verbose()', function () {
-		suites.usage(fixtures.log.verbose, { stderr: 0, stdout: 3 });
-	});
 
-	// This logger introduces a `silly` mode
+
+	// `verbose` and `silly` are disabled by default
+	// (but they write to stdout)
+	describe('log.verbose()', function () {
+		suites.usage(fixtures.log.verbose, { stderr: 0, stdout: 0 });
+	});
 	describe('log.silly()', function () {
-		suites.usage(fixtures.log.silly, { stderr: 0, stdout: 3 });
+		suites.usage(fixtures.log.silly, { stderr: 0, stdout: 0 });
 	});
 });
 
