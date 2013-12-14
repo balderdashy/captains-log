@@ -3,19 +3,19 @@ var expect	= require('./assertions');
 var CaptainsLog = require('../');
 
 describe('new CaptainsLog with no options', function () {
-	before(function newLog() {
-		this.log = new CaptainsLog();
-
-		// Used internally in tests
+	// Build interceptors
+	before(function () {
 		this.logs = {};
 		this.interceptors = {};
 	});
-
 	var stderr = fixtures.interceptor('stderr', process.stderr);
 	var stdout = fixtures.interceptor('stdout', process.stdout);
-	
 	before(stdout.new);
 	before(stderr.new);
+	before(function newLog() {
+		this.log = new CaptainsLog();
+	});
+
 
 
 	describe('log()', function () {
