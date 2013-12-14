@@ -163,7 +163,7 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 
 	// Ensure levels on the default winston logger
 	// are configured to use npm conventions.
-	winston.setLevels(options.logLevels || winston.config.npm.levels);
+	// winston.setLevels(options.logLevels || winston.config.npm.levels);
 
 	// Here are the log levels, for reference:
 	/*
@@ -178,17 +178,18 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 	*/
 
 
-	// Instantiate available transports
-	// as a category called 'core'.
+	// Register available transports, adding a category called 'core'.
 	winston.loggers.add('core', options.transports);
 	
-	// Instiate the core logger
+	// Instantiate a logger.  We'll call it the `core` logger.
 	logger = winston.loggers.get('core');
 
-	//
-	// Change levels on an instance of a logger
-	//
-	// logger.setLevels(winston.config.npm.levels);
+	// Change levels on the new instance of `core` logger
+	// 
+	// TODO: wtf winston??? what is going on here??
+	// 
+	logger.setLevels(options.logLevels || winston.config.npm.levels);
+	
 
 	// Return callable version of core logger
 	return _buildLogger(logger);
