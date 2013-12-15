@@ -10,7 +10,13 @@ var _ = require('lodash'),
  * Captains Log 
  *
  * @param {Object} options
- * @param {Object} loggerOverride	[overrides Winston if specified]
+ *
+ * @option {Object} custom			[overrides Winston if specified]
+ * @option {Array} transports		[array of already-configured&instantiated Winston transports-- overrides the defaults!!!]
+ * @option {Object} logLevels		[optional - log levels object for winston.setLevels, defaults to npm conventions]
+ * @option {String} level			[silly, verbose, info, debug, warn, error, or silent]
+ * @option {Boolean} inspect		[defaults to true-- whether to make the log output more readable (combines all args into one string)]
+ * 
  */
 
 /**
@@ -24,11 +30,14 @@ var _ = require('lodash'),
  * More info/docs on Winston:
  * https://github.com/flatiron/winston
  *
+ */
+
+/**
  *
  * Using your own custom logger
  * ====================================
  * 
- * To use a library other than Winstone, a `logger` must be
+ * To use a library other than Winstone, `options.custom` must be
  * passed in with, at minimum, an n-ary `log` method, e.g.:
  *
  * var log = new CaptainsLog({}, someLogger);
@@ -40,70 +49,25 @@ var _ = require('lodash'),
  * // etc.
  */
 
-module.exports = function CaptainsLog ( options, loggerOverride ) {
+module.exports = function CaptainsLog ( options ) {
 	var self = this;
+
+	// Grab winston inside of the constructor just to be safe.
+	// (since it seems to maintain some global state)
+	var winston = require('winston');
 
 
 	/**
-	 * Options
-	 *
-	 * @option level		[current log level for the console transport]
-	 * @option logLevels	[optional - log levels object for winston.setLevels, defaults to npm conventions]
-	 * @option transports	[array of transport configs to use (overrides default)]
-	 * @option colorize		[]
-	 * @option json			[]
-	 * 
-	 * @type {Object}
+	 * Apply default options
 	 */
 	if (typeof options !== 'object') {
 		options = {};
 	}
-
-
-	
-	var logger;
-
-
-
-	// If a logger override was specified, use it.
-	if ( loggerOverride ) {
-		logger = loggerOverride;
-		
-		// Make sure all supported log methods exist
-
-		// We assume that at least something called
-		// `logger.log` exists.
-		if (!logger.log) {
-			throw new Error(
-				'Unsupported logger override!\n' +
-				'(has no `.log()` method.)'
-			);
-		}
-
-		// Fill in the gaps for the log methods 
-		// used by Sails core in case they're missing.
-		logger.debug = logger.debug || logger.log;
-		logger.info = logger.info || logger.log;
-		logger.warn = logger.warn || logger.error || logger.log;
-		logger.error = logger.error || logger.log;
-		logger.verbose = logger.verbose || logger.log;
-		logger.silly = logger.silly || logger.log;
-
-		// Return logger
-		return _buildLogger(logger);
-	}
-
-
-
-
-
-
-
-
-
-
-	// No override was specified, so we'll use winston.
-	var winston = require('winston');
+	options = _.cloneDeep(options);
+	_.defaults(options, {
+		level: 'debug',
+		inspect: true
+	});
 
 
 
@@ -129,24 +93,19 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 		);
 	}
 
-	// Default log level is `debug`
-	var defaultLogLevel = 'debug';
 
 	// Default transports
 	if ( !options.transports ) {
 
-		var genericOptions = _.cloneDeep(options);
-		_.defaults(genericOptions, {
-			level: defaultLogLevel
-		});
+		var consoleOptions = _.extend({
+			json: false,
+			colorize: true,
+			timestamp: false
+		}, options);
 
 		// Build the transports array
 		options.transports = [
-			new (winston.transports.Console)(_.extend({
-				json: false,
-				colorize: true,
-				timestamp: false
-			}, genericOptions))
+			new (winston.transports.Console)(consoleOptions)
 		];
 
 
@@ -181,6 +140,44 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 		silent: 7
 	});
 
+	
+	var logger;
+
+
+
+
+
+	// If a logger override was specified, use it.
+	if ( options.custom ) {
+		logger = options.custom;
+		
+		// Make sure all supported log methods exist
+
+		// We assume that at least something called
+		// `logger.log` exists.
+		if (!logger.log) {
+			throw new Error(
+				'Unsupported logger override!\n' +
+				'(has no `.log()` method.)'
+			);
+		}
+
+		// Fill in the gaps for the log methods 
+		// used by Sails core in case they're missing.
+		logger.debug = logger.debug || logger.log;
+		logger.info = logger.info || logger.log;
+		logger.warn = logger.warn || logger.error || logger.log;
+		logger.error = logger.error || logger.log;
+		logger.verbose = logger.verbose || logger.log;
+		logger.silly = logger.silly || logger.log;
+
+		// Return logger
+		return _buildLogger(logger);
+	}
+
+
+
+	// No override was specified, so we'll use winston.
 
 	
 	// Instantiate logger
@@ -237,6 +234,13 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 	 */
 	function _inspect( logFn ) {
 		return function () {
+			var args = Array.prototype.slice.call(arguments);
+
+			// If options.inspect is disabled, just call the log fn normally
+			if ( ! options.inspect ) {
+				return logFn.apply(logFn, args);
+			}
+
 
 			// Compose `str` of all the arguments
 			var pieces = [];
@@ -259,7 +263,9 @@ module.exports = function CaptainsLog ( options, loggerOverride ) {
 				pieces.push(arg);
 			});
 			str = pieces.join(' ');
-			logFn.apply(logFn, [str]);
+
+			// Call log fn
+			return logFn.apply(logFn, [str]);
 		};
 	}
 
