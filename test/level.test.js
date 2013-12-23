@@ -4,7 +4,7 @@ var CaptainsLog = require('../');
 
 
 describe('new CaptainsLog with configured', function () {
-	
+
 
 	describe('level (silent)', function () {
 		before(function newLog() {

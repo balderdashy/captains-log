@@ -19,6 +19,23 @@ var _ = require('lodash'),
  * 
  */
 
+var DEFAULT_OPTIONS = {
+	level: 'info',
+	inspect: true,
+	logLevels: {
+		silly: 0,
+		verbose: 1,
+		info: 2,
+		debug: 3,
+		warn: 4,
+		error: 5,
+		// crit: 6,
+		// emerg: 6,
+		// fail: 6,
+		silent: 7
+	}
+};
+
 /**
  *
  * Default logger = Winston
@@ -64,10 +81,7 @@ module.exports = function CaptainsLog ( options ) {
 		options = {};
 	}
 	options = _.cloneDeep(options);
-	_.defaults(options, {
-		level: 'debug',
-		inspect: true
-	});
+	_.defaults(options, DEFAULT_OPTIONS);
 
 
 
@@ -121,24 +135,6 @@ module.exports = function CaptainsLog ( options ) {
 		// 	maxFiles: 10
 		// }
 	}
-
-
-	// Default log levels
-	options.logLevels = _.defaults(options.logLevels || {}, {
-		silly: 0,
-		verbose: 1,
-		info: 2,
-		// notice: 2,
-		debug: 3,
-		// alert: 4,
-		warn: 4,
-		// warning: 4,
-		error: 5,
-		// crit: 6,
-		// emerg: 6,
-		// fail: 6,
-		silent: 7
-	});
 
 	
 	var logger;

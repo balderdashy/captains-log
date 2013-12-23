@@ -53,12 +53,12 @@ module.exports = {
 				this.logs.stdout = [];
 			});
 
-			describe('usage ::', function () {
+			describe('::', function () {
 				it('works with no arguments', logFn() );
 				it('works with one argument', logFn('a thing') );
 				it('works with many arguments', logFn('lots', 'of', 'things') );
 			});
-			describe('usage results ::', function () {
+			describe('::', function () {
 				it('should have written to stderr', expect.numWritesToStream({
 						streamId: 'stderr',
 						numWrites: outputExpectations.stderr
