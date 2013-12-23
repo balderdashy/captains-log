@@ -1,6 +1,6 @@
 {
   "name": "captains-log",
-  "version": "0.10.5",
+  "version": "0.10.6",
   "description": "Simple wrapper around Winston to allow for declarative configuaration",
   "main": "index.js",
   "scripts": {
