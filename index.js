@@ -37,6 +37,11 @@ var DEFAULT_OPTIONS = {
 	}
 };
 
+
+// Look for options in `.captainlogrc` files and CAPTAINSLOG-* env variables.
+// More on `rc`:  https://github.com/dominictarr/rc#standards
+var RC_APPNAME = 'captainslog';
+
 /**
  *
  * Default logger = Winston
@@ -80,7 +85,7 @@ module.exports = function CaptainsLog ( overrides ) {
 	var options = _.cloneDeep(overrides);
 	// Then `rc` configuration conventions.
 	// (https://github.com/dominictarr/rc#standards)
-	var rconf = rc('captainslog');
+	var rconf = rc(RC_APPNAME);
 	rconf.level = rconf.level ||  // Accept command-line shortcuts:
 	rconf.verbose ? 'verbose' :   // --verbose
 	rconf.silent ? 'silent' :     // --silent
