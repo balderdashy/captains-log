@@ -3,13 +3,14 @@
  */
 
 var _ = require('lodash'),
-	util = require('util');
+	util = require('util'),
+	rc = require('rc');
 
 
 /**
  * Captains Log 
  *
- * @param {Object} options
+ * @param {Object} overrides
  *
  * @option {Object} custom			[overrides Winston if specified]
  * @option {Array} transports		[array of already-configured&instantiated Winston transports-- overrides the defaults!!!]
@@ -54,7 +55,7 @@ var DEFAULT_OPTIONS = {
  * Using your own custom logger
  * ====================================
  * 
- * To use a library other than Winstone, `options.custom` must be
+ * To use a library other than Winstone, `overrides.custom` must be
  * passed in with, at minimum, an n-ary `log` method, e.g.:
  *
  * var log = new CaptainsLog({}, someLogger);
@@ -74,14 +75,19 @@ module.exports = function CaptainsLog ( options ) {
 	var winston = require('winston');
 
 
-	/**
-	 * Apply default options
-	 */
-	if (typeof options !== 'object') {
-		options = {};
-	}
+	// Options passed in programmatically are highest priority.
+	// Then `rc` configuration conventions.
+	// (https://github.com/dominictarr/rc#standards)
+	// Then the implicit defaults. (DEFAULT_OPTIONS above) 
+	if (typeof options !== 'object') { options = {}; }
 	options = _.cloneDeep(options);
-	_.defaults(options, DEFAULT_OPTIONS);
+	var rconf = rc('captainslog', options);
+	rconf.level = rconf.level || 
+	rconf.verbose ? 'verbose' :
+	rconf.silent ? 'silent' :
+	rconf.silly ? 'silly' :
+	undefined;
+	_.defaults(options, rconf, DEFAULT_OPTIONS);
 
 
 
