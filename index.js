@@ -44,7 +44,15 @@ var DEFAULT_OPTIONS = {
 //
 // More on `rc` conventions:
 // https://github.com/dominictarr/rc#standards
-var DEFAULT_RC_NAME = 'captainslog';
+// 
+// This behavior may be changed by specifying an override.
+// To disable completely:
+// `rc: false`
+// 
+// To use a custom `rc` "appname":
+// `rc: 'foo'`
+// 
+var DEFAULT_RC = 'captainslog';
 
 
 
@@ -92,13 +100,17 @@ module.exports = function CaptainsLog ( overrides ) {
 
 	// Then `rc` configuration conventions.
 	// (https://github.com/dominictarr/rc#standards)
-	var appName = overrides.appName || DEFAULT_RC_NAME;
-	var rconf = rc(appName);
-	rconf.level = rconf.level ||  // Accept command-line shortcuts:
-	rconf.verbose ? 'verbose' :   // --verbose
-	rconf.silent ? 'silent' :     // --silent
-	rconf.silly ? 'silly' :       // --silly
-	undefined;
+	var rconf;
+	if (overrides.rc === false) { rconf = {}; }
+	else {
+		rconf = rc(overrides.rc || DEFAULT_RC);
+		rconf.level = rconf.level ||  // Accept command-line shortcuts:
+		rconf.verbose ? 'verbose' :   // --verbose
+		rconf.silent ? 'silent' :     // --silent
+		rconf.silly ? 'silly' :       // --silly
+		undefined;
+	}
+
 	// Then the implicit defaults. (DEFAULT_OPTIONS above) 
 	_.defaults(options, rconf, DEFAULT_OPTIONS);
 
