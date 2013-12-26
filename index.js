@@ -81,14 +81,15 @@ module.exports = function CaptainsLog ( options ) {
 	// Then the implicit defaults. (DEFAULT_OPTIONS above) 
 	if (typeof options !== 'object') { options = {}; }
 	options = _.cloneDeep(options);
-	var rconf = rc('captainslog', options);
+	
+	// Accept command-line shortcuts
+	var rconf = rc('captainslog');
 	rconf.level = rconf.level || 
 	rconf.verbose ? 'verbose' :
 	rconf.silent ? 'silent' :
-	rconf.silly ? 'silly' :
-	undefined;
+	rconf.silly ? 'silly' : undefined;
+	
 	_.defaults(options, rconf, DEFAULT_OPTIONS);
-
 
 
 	// Tranports
