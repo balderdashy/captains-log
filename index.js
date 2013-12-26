@@ -34,16 +34,17 @@ var DEFAULT_OPTIONS = {
 		// emerg: 6,
 		// fail: 6,
 		silent: 7
-	},
-
-	// By default, look for options in:
-	//   + `.captainlogrc` files
-	//   + `CAPTAINSLOG-*` env variables
-	//
-	// More on `rc` conventions:
-	// https://github.com/dominictarr/rc#standards
-	appName: 'captainslog'
+	}
 };
+
+
+// By default, look for options in:
+//   + `.captainlogrc` files
+//   + `CAPTAINSLOG-*` env variables
+//
+// More on `rc` conventions:
+// https://github.com/dominictarr/rc#standards
+var DEFAULT_RC_NAME = 'captainslog';
 
 
 
@@ -88,9 +89,11 @@ module.exports = function CaptainsLog ( overrides ) {
 	// Options passed in programmatically are highest priority.
 	if (typeof overrides !== 'object') { overrides = {}; }
 	var options = _.cloneDeep(overrides);
+
 	// Then `rc` configuration conventions.
 	// (https://github.com/dominictarr/rc#standards)
-	var rconf = rc(overrides.appName);
+	var appName = overrides.appName || DEFAULT_RC_NAME;
+	var rconf = rc(appName);
 	rconf.level = rconf.level ||  // Accept command-line shortcuts:
 	rconf.verbose ? 'verbose' :   // --verbose
 	rconf.silent ? 'silent' :     // --silent
