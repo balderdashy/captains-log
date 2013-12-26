@@ -67,7 +67,7 @@ var DEFAULT_OPTIONS = {
  * // etc.
  */
 
-module.exports = function CaptainsLog ( options ) {
+module.exports = function CaptainsLog ( overrides ) {
 	var self = this;
 
 	// Grab winston inside of the constructor just to be safe.
@@ -76,19 +76,17 @@ module.exports = function CaptainsLog ( options ) {
 
 
 	// Options passed in programmatically are highest priority.
+	if (typeof overrides !== 'object') { overrides = {}; }
+	var options = _.cloneDeep(overrides);
 	// Then `rc` configuration conventions.
 	// (https://github.com/dominictarr/rc#standards)
-	// Then the implicit defaults. (DEFAULT_OPTIONS above) 
-	if (typeof options !== 'object') { options = {}; }
-	options = _.cloneDeep(options);
-	
-	// Accept command-line shortcuts
 	var rconf = rc('captainslog');
-	rconf.level = rconf.level || 
-	rconf.verbose ? 'verbose' :
-	rconf.silent ? 'silent' :
-	rconf.silly ? 'silly' : undefined;
-	
+	rconf.level = rconf.level ||  // Accept command-line shortcuts:
+	rconf.verbose ? 'verbose' :   // --verbose
+	rconf.silent ? 'silent' :     // --silent
+	rconf.silly ? 'silly' :       // --silly
+	undefined;
+	// Then the implicit defaults. (DEFAULT_OPTIONS above) 
 	_.defaults(options, rconf, DEFAULT_OPTIONS);
 
 
