@@ -5,7 +5,7 @@
 var _ = require('lodash')
 	, util = require('util')
 	, rc = require('rc')
-	, augmentAll = require('./lib/augmentAll')
+	, wrap = require('./lib/wrap')
 	, configure = require('./lib/configure')
 	, captains = require('./lib/captains');
 
@@ -59,6 +59,6 @@ module.exports = function CaptainsLog ( overrides ) {
 	}
 
 	// Return enhanced (callable) version of logger
-	return augmentAll(logger, options);
+	return wrap(logger, options);
 
 };
