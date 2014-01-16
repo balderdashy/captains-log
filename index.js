@@ -46,12 +46,14 @@ module.exports = function CaptainsLog ( overrides ) {
 			);
 		}
 
-		// Fill in the gaps for the required log methods
-		// if they're missing (only required method is `logger.log`)
+		// Fill in the gaps for the required log methods with
+		// reasonable guesses if the custom logger is missing any
+		// (only required method is `logger.log` or `logger.debug`)
 		logger.debug = logger.debug || logger.log;
 		logger.info = logger.info || logger.log;
 		logger.warn = logger.warn || logger.error || logger.log;
 		logger.error = logger.error || logger.log;
+		logger.crit = logger.crit || logger.error;
 		logger.verbose = logger.verbose || logger.log;
 		logger.silly = logger.silly || logger.log;
 	}
