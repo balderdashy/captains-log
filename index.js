@@ -7,7 +7,7 @@ var _ = require('lodash')
 	, rc = require('rc')
 	, augmentAll = require('./lib/augmentAll')
 	, configure = require('./lib/configure')
-	, logger = require('./lib/captains');
+	, captains = require('./lib/captains');
 
 
 
@@ -26,6 +26,10 @@ module.exports = function CaptainsLog ( overrides ) {
 	// Apply overrides to the default configuration
 	var options = configure(overrides);
 
+	// If no override was specified, we'll instantiate
+	// our default logger, `captains`.
+	logger = captains();
+
 	// If a custom logger override was specified,
 	// lets try to use it.
 	if ( options.custom ) {
@@ -34,31 +38,25 @@ module.exports = function CaptainsLog ( overrides ) {
 		// Make sure enough log methods exist to meet our requirements.
 		//
 		// We assume that at least something called
-		// `logger.log` exists.
+		// `logger.log` or `logger.debug` exists.
 		if (!logger.log) {
 			throw new Error(
 				'Unsupported logger override!\n' +
-				'(has no `.log()` method.)'
+				'(has no `.log()` or `.debug()` method.)'
 			);
 		}
 
 		// Fill in the gaps for the required log methods
-		// if they're missing (only required method is `logger.debug`)
+		// if they're missing (only required method is `logger.log`)
 		logger.debug = logger.debug || logger.log;
 		logger.info = logger.info || logger.log;
 		logger.warn = logger.warn || logger.error || logger.log;
 		logger.error = logger.error || logger.log;
 		logger.verbose = logger.verbose || logger.log;
 		logger.silly = logger.silly || logger.log;
-
-		// Return enhanced (callable) version of custom logger
-		return augmentAll(logger);
 	}
 
-
-	// No override was specified, so we'll instantiate
-	// our simple core logger, `captains`, then return
-	// a enhanced (callable) version of it:
-	return augmentAll(logger);
+	// Return enhanced (callable) version of logger
+	return augmentAll(logger, options);
 
 };

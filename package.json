@@ -25,7 +25,8 @@
   "dependencies": {
     "lodash": "2.4.1",
     "rc": "~0.3.2",
-    "colors": "~0.6.2"
+    "colors": "~0.6.2",
+    "merge-defaults": "~0.1.0"
   },
   "devDependencies": {
     "fixture-stdout": "0.2.0"
