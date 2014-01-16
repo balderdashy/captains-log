@@ -58,15 +58,19 @@ var DEFAULT_RC = 'captainslog';
 
 /**
  *
- * Default logger = Winston
+ * Usege with Winston
  * ====================================
  * 
- * By default, this module encapsulates Winston, a popular logger
+ * Formerly, this module encapsulated Winston, a popular logger
  * by @indexzero and the gals/guys over at Nodejitsu.
+ * Recently, Winston was made optional to make this as lightweight
+ * as possible and reduce `npm install`/`require()` time.
+ *
+ * To use Winston, do the following:
  * 
+ *
  * More info/docs on Winston:
  * https://github.com/flatiron/winston
- *
  */
 
 /**
