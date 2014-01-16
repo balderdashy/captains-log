@@ -23,10 +23,9 @@
     "url": "https://github.com/mikermcneil/captains-log/issues"
   },
   "dependencies": {
-    "sails-util": "~0.10.0",
-    "winston": "0.7.2",
     "lodash": "2.4.1",
-    "rc": "~0.3.2"
+    "rc": "~0.3.2",
+    "colors": "~0.6.2"
   },
   "devDependencies": {
     "fixture-stdout": "0.2.0"
