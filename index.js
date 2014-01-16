@@ -42,8 +42,8 @@ module.exports = function CaptainsLog ( overrides ) {
 			);
 		}
 
-		// Fill in the gaps for the log methods 
-		// used by Sails core in case they're missing.
+		// Fill in the gaps for the required log methods
+		// if they're missing (only required method is `logger.debug`)
 		logger.debug = logger.debug || logger.log;
 		logger.info = logger.info || logger.log;
 		logger.warn = logger.warn || logger.error || logger.log;
