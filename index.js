@@ -25,6 +25,14 @@ var _ = require('lodash')
 
 module.exports = function CaptainsLog ( overrides ) {
 
+	// <todo>
+	// 
+	// smart caching
+	// i.e. if (process._captainslog) return process._captainslog
+	// (but only if the overrides passed in are identical)
+	// 
+	// </todo>
+
 	// Apply overrides to the default configuration
 	var options = configure(overrides);
 
