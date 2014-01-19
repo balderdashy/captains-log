@@ -19,6 +19,8 @@ var _ = require('lodash')
  *           , {Object}  logLevels    : optional - named log levels, defaults to npm conventions
  *           , {String}  level        : the current log level- e.g. silly, verbose, info, debug, warn, error, or silent
  *           , {Boolean} inspect      : defaults to true-- whether to make the log output more readable (combines all args into one string)
+ *
+ * @return {Function{}} enhanced (callable) version of logger
  */
 
 module.exports = function CaptainsLog ( overrides ) {
@@ -58,7 +60,13 @@ module.exports = function CaptainsLog ( overrides ) {
 		logger.silly = logger.silly || logger.log;
 	}
 
-	// Return enhanced (callable) version of logger
-	return wrap(logger, options);
+	// Make logger callable and stuff (wrap it)
+	var callableLogger = wrap(logger, options);
+
+	// Also expose logger on `process` if `globalizeAs` is enabled
+	if ( options.globalizeAs ) process[globalizeAs] = callableLogger;
+	
+
+	return callableLogger;
 
 };
