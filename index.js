@@ -72,7 +72,7 @@ module.exports = function CaptainsLog ( overrides ) {
 	var callableLogger = wrap(logger, options);
 
 	// Also expose logger on `process` if `globalizeAs` is enabled
-	if ( options.globalizeAs ) process[globalizeAs] = callableLogger;
+	if ( options.globalizeAs ) process[options.globalizeAs] = callableLogger;
 	
 
 	return callableLogger;
