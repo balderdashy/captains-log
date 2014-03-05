@@ -25,9 +25,15 @@ describe('new CaptainsLog with no options', function () {
 			{ stderr: 3, stdout: 0 });
 	});
 
-	// Winston writes the rest of its logging methods to stdout
+	// Winston writes the rest of its logging methods to stdout,
+	// so we need to maintain consistency w/ the previous expected behavior
+	// (and make it as easy as possible to plug in winston)
 	describe('log.info()', function () {
 		suites.console.countWritesToSpecificStreams(fixtures.log.info,
+			{ stderr: 0, stdout: 3 });
+	});
+	describe('log.blank()', function () {
+		suites.console.countWritesToSpecificStreams(fixtures.log.blank,
 			{ stderr: 0, stdout: 3 });
 	});
 	describe('log.verbose()', function () {

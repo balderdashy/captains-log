@@ -41,6 +41,15 @@ module.exports = {
 				_pauseAll(this);
 			};
 		},
+
+		blank: function () {
+			var args = Array.prototype.slice.call(arguments);
+			return function () {
+				_recordAll(this);
+				this.log.blank.apply(args);
+				_pauseAll(this);
+			};
+		},
 		
 		_call: function () {
 			var args = Array.prototype.slice.call(arguments);
