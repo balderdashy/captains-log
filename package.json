@@ -29,6 +29,7 @@
     "merge-defaults": "~0.1.0"
   },
   "devDependencies": {
-    "fixture-stdout": "0.2.0"
+    "fixture-stdout": "0.2.0",
+    "mocha": "^1.17.1"
   }
 }
