@@ -1,7 +1,7 @@
 captains-log
 ============
 
-Simple wrapper around Winston to allow for declarative configuration
+Simple logger for use with Sails, allowing easy custom configuration.
 
 
 #### Default log levels
