@@ -12,6 +12,36 @@ module.exports = {
 	console: {
 
 		/**
+		 * Ensure output value is correct.
+		 * 
+		 * @param  {[type]} logFn             [description]
+		 * @param  {[type]} valueExpected     [description]
+		 * @return {[type]}                   [description]
+		 */
+		checkOutputValue: function ( logFn, valueExpected ) {
+			before(function emptyLogsAndInterceptors () {
+				this.logs = {};
+				this.interceptors = {};
+				this.interceptors.stderr = new StreamObserver(process.stderr);
+				this.interceptors.stdout = new StreamObserver(process.stdout);
+				this.logs.stderr = [];
+				this.logs.stdout = [];
+			});
+
+			// Run the test
+			it('runs the test function', function (){
+				logFn();
+			});
+
+			// Check for the expected results
+			it('should have written: "' + valueExpected + '"' , function (){
+				expect.equals({
+					value: valueExpected
+				});
+			});
+		},
+
+		/**
 		 * Ensure total number of writes is correct.
 		 * 
 		 * @param  {[type]} logFn             [description]

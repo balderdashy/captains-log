@@ -57,4 +57,29 @@ expect.numWrites = function (options) {
 };
 
 
+/**
+ * equals
+ * 
+ * @option  {String} value [e.g. "My name is Rangor the razorblade, and I have 198 crayons!"]
+ */
+expect.equals = function (options) {
+	return function () {
+		var history = [];
+		_.each(this.logs, function (streamHistory, streamId) {
+			history = history.concat(streamHistory);
+		});
+
+		var actualConcatenatedValue = history.join('');
+
+		assert.equal(
+			actualConcatenatedValue,
+			options.value,
+			'Unexpected value written to log ' +
+			'(' + actualConcatenatedValue + ' instead of ' + options.value + ').'
+		);
+	};
+};
+
+
+
 module.exports = expect;
