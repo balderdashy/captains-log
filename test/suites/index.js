@@ -2,7 +2,10 @@
  * Dependencies
  */
 var StreamObserver = require('fixture-stdout');
+var _ = require('lodash');
 var expect	= require('../assertions');
+var fixtures = require('../fixtures');
+var _bindAllTo = require('../standalone/bind-all-to');
 
 
 // Prepare suites of tests
@@ -14,11 +17,11 @@ module.exports = {
 		/**
 		 * Ensure output value is correct.
 		 * 
-		 * @param  {[type]} logFn             [description]
+		 * @param  {[type]} testFn            [description]
 		 * @param  {[type]} valueExpected     [description]
 		 * @return {[type]}                   [description]
 		 */
-		checkOutputValue: function ( logFn, valueExpected ) {
+		checkOutputValue: function ( testFn, valueExpected ) {
 			before(function emptyLogsAndInterceptors () {
 				this.logs = {};
 				this.interceptors = {};
@@ -28,17 +31,19 @@ module.exports = {
 				this.logs.stdout = [];
 			});
 
-			// Run the test
+			// First build a mock log, then run the test function,
+			// passing it as the first argument.
 			it('runs the test function', function (){
-				logFn();
+
+				var mockLog = _bindAllTo(_.cloneDeep(fixtures.log), this);
+
+				testFn(mockLog);
 			});
 
 			// Check for the expected results
-			it('should have written: "' + valueExpected + '"' , function (){
-				expect.equals({
-					value: valueExpected
-				});
-			});
+			it('should have written: "' + valueExpected + '"' , expect.equals({
+				value: valueExpected
+			}));
 		},
 
 		/**
@@ -102,3 +107,6 @@ module.exports = {
 	}
 
 };
+
+
+

@@ -71,11 +71,14 @@ expect.equals = function (options) {
 
 		var actualConcatenatedValue = history.join('');
 
+		console.log('Troubleshooting:','Unexpected value written to log ' +
+			'(' + actualConcatenatedValue + ' instead of ' + options.value + ').');
+
 		assert.equal(
 			actualConcatenatedValue,
 			options.value,
 			'Unexpected value written to log ' +
-			'(' + actualConcatenatedValue + ' instead of ' + options.value + ').'
+			'("' + actualConcatenatedValue + '" instead of "' + options.value + '").'
 		);
 	};
 };

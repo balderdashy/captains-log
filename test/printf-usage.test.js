@@ -13,25 +13,20 @@ describe('printf-usage', function () {
 	});
 
 	describe('sanity check to make sure suite/assertion is working as expected', function () {
-		suites.console.checkOutputValue(function () {
-			fixtures.log.debug('oh hi');
+		suites.console.checkOutputValue(function customTest (log) {
+			log.debug('oh hi');
 		}, 'oh hi');
 	});
 
-
 	describe('log.debug', function () {
-		suites.console.checkOutputValue(function () {
+		suites.console.checkOutputValue(function customTest (log) {
 			fixtures.log.debug('foo %d', 3);
 		}, 'foo 3');
 	});
 	describe('log', function () {
-		suites.console.checkOutputValue(function () {
+		suites.console.checkOutputValue(function customTest (log) {
 			fixtures.log._call('foo %d', 3);
 		}, 'foo 3');
 	});
-
-
-	// TODO: fix
-	// This test should be failing-- the change herein causes false positive passing test cases
 
 });
