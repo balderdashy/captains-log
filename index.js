@@ -12,7 +12,7 @@ var _ = require('lodash')
 
 
 /**
- * Captains Log 
+ * Captains Log
  *
  * @param {Object} overrides
  *           , {Object}  custom       : a custom logger to use, i.e. Winston
@@ -26,11 +26,11 @@ var _ = require('lodash')
 module.exports = function CaptainsLog ( overrides ) {
 
 	// <todo>
-	// 
+	//
 	// smart caching
 	// i.e. if (process._captainslog) return process._captainslog
 	// (but only if the overrides passed in are identical)
-	// 
+	//
 	// </todo>
 
 	// Apply overrides to the default configuration
@@ -38,13 +38,13 @@ module.exports = function CaptainsLog ( overrides ) {
 
 	// If no override was specified, we'll instantiate
 	// our default logger, `captains`.
-	logger = captains();
+	var logger = captains();
 
 	// If a custom logger override was specified,
 	// lets try to use it.
 	if ( options.custom ) {
 		logger = options.custom;
-		
+
 		// Make sure enough log methods exist to meet our requirements.
 		//
 		// We assume that at least something called
@@ -61,7 +61,7 @@ module.exports = function CaptainsLog ( overrides ) {
 		// (only required method is `logger.log` or `logger.debug`)
 		// If no reasonable alternative is possible, don't log
 		var nullLog = function(msg) { };
-		
+
 		logger.debug = logger.debug || nullLog;
 		logger.info = logger.info || nullLog;
 		logger.warn = logger.warn || logger.error || nullLog;
@@ -77,7 +77,7 @@ module.exports = function CaptainsLog ( overrides ) {
 
 	// Also expose logger on `process` if `globalizeAs` is enabled
 	if ( options.globalizeAs ) process[options.globalizeAs] = callableLogger;
-	
+
 
 	return callableLogger;
 

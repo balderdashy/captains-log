@@ -21,11 +21,11 @@ describe('printf-usage', function() {
     }, 'oh hi\n');
   });
 
-  // describe('log.debug', function() {
-  //   suites.console.checkOutputValue(function customTest(log) {
-  //     fixtures.log.debug('foo %d', 3);
-  //   }, 'foo 3');
-  // });
+  describe('log.debug', function() {
+    suites.console.checkOutputValue(function customTest(log) {
+      log.debug('foo %d', 3);
+    }, 'foo 3');
+  });
 
   // describe('log', function() {
   //   suites.console.checkOutputValue(function customTest(log) {
