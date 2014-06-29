@@ -16,7 +16,7 @@ module.exports = {
 
     /**
      * Ensure output value is correct.
-     * 
+     *
      * @param  {[type]} testFn            [description]
      * @param  {[type]} valueExpected     [description]
      * @return {[type]}                   [description]
@@ -36,16 +36,17 @@ module.exports = {
       it('runs the test function', function (){
 
         var ctx = this;
-        var mockLog = _.reduce(_.functions(this.log), function (memo, key) {
-          var origFn = ctx.log[key];
+        var mockLog = _.reduce(_.functions(ctx.log), function (memo, key) {
 
+          var origFn = ctx.log[key];
           memo[key] = function (){
             _recordAll(ctx);
             origFn.apply(ctx.log, Array.prototype.slice.call(arguments));
             _pauseAll(ctx);
           };
+
           return memo;
-        }, function _baseLogFn(){mockLog.debug.apply(Array.prototype.slice.call(arguments));});
+        }, function _baseLogFn(){mockLog.debug.apply(ctx.log, Array.prototype.slice.call(arguments));});
 
 
         testFn(mockLog);
@@ -60,7 +61,7 @@ module.exports = {
 
     /**
      * Ensure total number of writes is correct.
-     * 
+     *
      * @param  {[type]} logFn             [description]
      * @param  {[type]} numWritesExpected [description]
      * @return {[type]}                   [description]
@@ -85,7 +86,7 @@ module.exports = {
 
     /**
      * Ensure console output is written to the proper streams.
-     * 
+     *
      * @param  {[type]} logFn              [description]
      * @param  {[type]} outputExpectations [description]
      * @return {[type]}                    [description]

@@ -7,11 +7,13 @@ var _recordAll = require('./_record-all');
 var _pauseAll = require('./_pause-all');
 
 
+// Note- this could be done a lot more elegantly- see the newer test suites
+// (e.g. expectOutputValue) for an example.
 
 /**
  * Fixtures to be used directly by mocha's `before`, `after`, `beforeEach`,
  * `afterEach`, and `it` methods.
- * 
+ *
  * @type {Object}
  */
 module.exports = {
@@ -57,7 +59,7 @@ module.exports = {
 				_pauseAll(ctx);
 			};
 		},
-		
+
 		_call: function () {
 			var args = Array.prototype.slice.call(arguments);
 			return function () {

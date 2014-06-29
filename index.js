@@ -2,12 +2,12 @@
  * Module dependencies.
  */
 
-var _ = require('lodash')
-	, util = require('util')
-	, rc = require('rc')
-	, wrap = require('./lib/wrap')
-	, configure = require('./lib/configure')
-	, captains = require('./lib/captains');
+var util = require('util');
+var _ = require('lodash');
+var rc = require('rc');
+var wrap = require('./lib/wrap');
+var configure = require('./lib/configure');
+var captains = require('./lib/captains');
 
 
 
@@ -60,7 +60,7 @@ module.exports = function CaptainsLog ( overrides ) {
 		// reasonable guesses if the custom logger is missing any
 		// (only required method is `logger.log` or `logger.debug`)
 		// If no reasonable alternative is possible, don't log
-		var nullLog = function(msg) { };
+		var nullLog = function() { };
 
 		logger.debug = logger.debug || nullLog;
 		logger.info = logger.info || nullLog;
@@ -75,8 +75,9 @@ module.exports = function CaptainsLog ( overrides ) {
 	// Make logger callable and stuff (wrap it)
 	var callableLogger = wrap(logger, options);
 
-	// Also expose logger on `process` if `globalizeAs` is enabled
-	if ( options.globalizeAs ) process[options.globalizeAs] = callableLogger;
+	// Also expose logger on `global` if `globalizeAs` is enabled
+  var GLOBAL = (typeof global !== undefined ? global : typeof window !== undefined ? window : Function);
+	if ( options.globalizeAs ) GLOBAL[options.globalizeAs] = callableLogger;
 
 
 	return callableLogger;

@@ -24,13 +24,13 @@ describe('printf-usage', function() {
   describe('log.debug', function() {
     suites.console.checkOutputValue(function customTest(log) {
       log.debug('foo %d', 3);
-    }, 'foo 3');
+    }, 'foo 3\n');
   });
 
-  // describe('log', function() {
-  //   suites.console.checkOutputValue(function customTest(log) {
-  //     fixtures.log._call('foo %d', 3);
-  //   }, 'foo 3');
-  // });
+  describe('log', function() {
+    suites.console.checkOutputValue(function customTest(log) {
+      log('foo %d', 3);
+    }, 'foo 3\n');
+  });
 
 });
