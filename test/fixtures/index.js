@@ -1,7 +1,10 @@
 /**
  * Dependencies
  */
+
 var _ = require('lodash');
+var _recordAll = require('./_record-all');
+var _pauseAll = require('./_pause-all');
 
 
 
@@ -18,99 +21,83 @@ module.exports = {
 		silly: function () {
 			var args = Array.prototype.slice.call(arguments);
 			return function () {
-				_recordAll(this);
-				this.log.silly.apply(args);
-				_pauseAll(this);
+				var ctx = this;
+				_recordAll(ctx);
+				ctx.log.silly.apply(args);
+				_pauseAll(ctx);
 			};
 		},
 
 		verbose: function () {
 			var args = Array.prototype.slice.call(arguments);
 			return function () {
-				_recordAll(this);
-				this.log.verbose.apply(args);
-				_pauseAll(this);
+				var ctx = this;
+				_recordAll(ctx);
+				ctx.log.verbose.apply(args);
+				_pauseAll(ctx);
 			};
 		},
 
 		info: function () {
 			var args = Array.prototype.slice.call(arguments);
 			return function () {
-				_recordAll(this);
-				this.log.info.apply(args);
-				_pauseAll(this);
+				var ctx = this;
+				_recordAll(ctx);
+				ctx.log.info.apply(args);
+				_pauseAll(ctx);
 			};
 		},
 
 		blank: function () {
 			var args = Array.prototype.slice.call(arguments);
 			return function () {
-				_recordAll(this);
-				this.log.blank.apply(args);
-				_pauseAll(this);
+				var ctx = this;
+				_recordAll(ctx);
+				ctx.log.blank.apply(args);
+				_pauseAll(ctx);
 			};
 		},
 		
 		_call: function () {
 			var args = Array.prototype.slice.call(arguments);
 			return function () {
-				_recordAll(this);
-				this.log.apply(args);				
-				_pauseAll(this);
+				var ctx = this;
+				_recordAll(ctx);
+				ctx.log.apply(args);
+				_pauseAll(ctx);
 			};
 		},
 
 		debug: function () {
 			var args = Array.prototype.slice.call(arguments);
 			return function () {
-				_recordAll(this);
-				this.log.debug.apply(args);
-				_pauseAll(this);
+				var ctx = this;
+				_recordAll(ctx);
+				ctx.log.debug.apply(args);
+				_pauseAll(ctx);
 			};
 		},
 
 		warn: function () {
 			var args = Array.prototype.slice.call(arguments);
 			return function () {
-				_recordAll(this);
-				this.log.warn.apply(args);
-				_pauseAll(this);
+				var ctx = this;
+				_recordAll(ctx);
+				ctx.log.warn.apply(args);
+				_pauseAll(ctx);
 			};
 		},
 
 		error: function () {
 			var args = Array.prototype.slice.call(arguments);
 			return function () {
-				_recordAll(this);
-				this.log.error.apply(args);
-				_pauseAll(this);
+				var ctx = this;
+				_recordAll(ctx);
+				ctx.log.error.apply(args);
+				_pauseAll(ctx);
 			};
 		}
 	}
 };
 
-
-
-
-
-
-
-
-
-// Helpers
-// 
-function _recordAll (ctx) {
-	_.each(ctx.interceptors, function (interceptor, id) {
-		interceptor.capture(function intercept (string, encoding, fd) {
-			ctx.logs[id].push(string);
-			return false;
-		});
-	});
-}
-
-function _pauseAll (ctx) {
-	_.each(ctx.interceptors, function (interceptor, id) {
-		interceptor.release();
-	});
-}
 
