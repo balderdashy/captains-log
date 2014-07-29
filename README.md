@@ -3,6 +3,12 @@
 Lightweight logger with a simple pass-through configuration for use with fancier logging libraries.  Used by the [Sails framework](http://github.com/balderdashy/sails).  Optional support for colorized output, custom prefixes, and log levels (using [npm's logging conventions](https://github.com/isaacs/npmlog#loglevelprefix-message-).)
 
 
+### Installation
+
+```shell
+$ npm install captains-log
+```
+
 ### Usage
 
 ```javascript
