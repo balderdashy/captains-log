@@ -1,7 +1,7 @@
 {
   "name": "captains-log",
   "version": "0.11.11",
-  "description": "Simple wrapper around Winston to allow for declarative configuaration",
+  "description": "Lightweight logger with a simple pass-through configuration for use with fancier logging libraries",
   "main": "index.js",
   "scripts": {
     "test": "mocha -b"
@@ -30,6 +30,6 @@
   },
   "devDependencies": {
     "fixture-stdout": "0.2.0",
-    "mocha": "^1.17.1"
+    "mocha": "~1.17.1"
   }
 }
