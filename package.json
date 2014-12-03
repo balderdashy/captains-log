@@ -4,7 +4,7 @@
   "description": "Lightweight logger with a simple pass-through configuration for use with fancier logging libraries",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -b"
+    "test": "node ./node_modules/mocha/bin/mocha -b"
   },
   "repository": {
     "type": "git",
