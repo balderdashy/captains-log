@@ -17,7 +17,7 @@ var captains = require('./lib/captains');
  * @param {Object} overrides
  *           , {Object}  custom       : a custom logger to use, i.e. Winston
  *           , {Object}  logLevels    : optional - named log levels, defaults to npm conventions
- *           , {String}  level        : the current log level- e.g. silly, verbose, info, debug, warn, error, or silent
+ *           , {String}  level        : the current log level- e.g. silly, verbose, debug, info, warn, error, or silent
  *           , {Boolean} inspect      : defaults to true-- whether to make the log output more readable (combines all args into one string)
  *
  * @return {Function{}} enhanced (callable) version of logger
@@ -62,14 +62,14 @@ module.exports = function CaptainsLog ( overrides ) {
 		// If no reasonable alternative is possible, don't log
 		var nullLog = function() { };
 
-		logger.debug = logger.debug || nullLog;
-		logger.info = logger.info || nullLog;
-		logger.warn = logger.warn || logger.error || nullLog;
-		logger.error = logger.error || nullLog;
 		logger.crit = logger.crit || logger.error || nullLog;
+		logger.error = logger.error || nullLog;
+		logger.warn = logger.warn || logger.error || nullLog;
+		logger.info = logger.info || nullLog;
+		logger.blank = logger.blank || nullLog;
+		logger.debug = logger.debug || nullLog;
 		logger.verbose = logger.verbose || nullLog;
 		logger.silly = logger.silly || nullLog;
-		logger.blank = logger.blank || nullLog;
 	}
 
 	// Make logger callable and stuff (wrap it)

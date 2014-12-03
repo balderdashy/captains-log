@@ -32,9 +32,9 @@ log.silly();
 
 log.verbose();
 
-log.info();
-
 log.debug()
+
+log.info();
 
 log.warn();
 
