@@ -17,7 +17,7 @@ var _ = require('lodash');
  *
  * ----------------------------------------------------------------
  * Note:
- * 
+ *
  * e.g.
  *
  * ```
@@ -52,20 +52,20 @@ var _ = require('lodash');
  *
  * // But unfortunately, he doesn't have any money:
  * // -> -35 === (15 - 50) === (mike.bankAccount - 50)
- * 
- * 
+ *
+ *
  * // Anyway, it was awkward to give him the `spend` method directly-
  * // plus, if we want to have any luck actually spending money, we'll
  * // need to connect the card to the company bank account.
  * var balderdash = { bankAccount: 100000 };
- * 
+ *
  * // To do this, we need `bind-all-to`:
  * _bindAllTo(mike.card, balderdash);
  *
  * // Now when we spend from the card, the amount is subtracted
  * // from the `bankAccount` property of `balderdash`:
  * mike.card.spend(50)
- * // -> 99950 
+ * // -> 99950
  * ```
  *
  */
@@ -74,6 +74,6 @@ module.exports = function _bindAllTo(obj, newCtx) {
   _(obj).functions().each(function(key) {
     obj[key] = _.bind(obj[key], newCtx);
   });
-  
+
   return obj;
 };
