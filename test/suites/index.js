@@ -1,8 +1,8 @@
 /**
  * Dependencies
  */
-var StreamObserver = require('fixture-stdout');
 var _ = require('lodash');
+var StreamObserver = require('fixture-stdout');
 var expect = require('../assertions');
 var fixtures = require('../fixtures');
 var _recordAll = require('../fixtures/_record-all');

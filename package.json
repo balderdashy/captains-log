@@ -11,11 +11,11 @@
     "url": "git://github.com/mikermcneil/captains-log.git"
   },
   "keywords": [
-    "winston",
-    "sails",
     "log",
     "logger",
-    "waterline"
+    "sails",
+    "waterline",
+    "winston"
   ],
   "author": "Mike McNeil",
   "license": "MIT",
@@ -24,8 +24,8 @@
   },
   "dependencies": {
     "lodash": "2.4.1",
-    "rc": "~0.3.2",
-    "colors": "~0.6.2",
+    "rc": "0.3.5",
+    "colors": "0.6.2",
     "merge-defaults": "~0.1.0"
   },
   "devDependencies": {

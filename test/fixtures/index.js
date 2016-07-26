@@ -2,7 +2,6 @@
  * Dependencies
  */
 
-var _ = require('lodash');
 var _recordAll = require('./_record-all');
 var _pauseAll = require('./_pause-all');
 

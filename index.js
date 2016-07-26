@@ -3,7 +3,6 @@
  */
 
 var util = require('util');
-var _ = require('lodash');
 var rc = require('rc');
 var wrap = require('./lib/wrap');
 var configure = require('./lib/configure');
