@@ -19,6 +19,8 @@ var captains = require('./lib/captains');
  *           , {Object}  logLevels    : optional - named log levels, defaults to npm conventions
  *           , {String}  level        : the current log level- e.g. silly, verbose, info, debug, warn, error, or silent
  *           , {Boolean} inspect      : defaults to true-- whether to make the log output more readable (combines all args into one string)
+ *           , {Object}  inspectOptions : defaults to {}-- options to pass to the inspect function. One example can be {colors: true, depth:null}
+ *                                        printing objects in colors. See: https://nodejs.org/api/util.html#util_util_inspect_object_options
  *
  * @return {Function{}} enhanced (callable) version of logger
  */

@@ -73,6 +73,22 @@ For example:
 var customLogger = console.log.bind(console);
 ```
 
+##### Configure inspect
+
+When an object is passed, and inspect is set to true (it is true, by default), you can configure the inner inspect function options, by passing an `inspectOptions` parameter:
+
+```javascript
+var log = require('captains-log')({inspectOptions: {colors: true, depth: null}});
+
+log('hello', 'world', {this:'is', a: 'nice', object: new Date()});
+
+```
+
+The previous code renders the object with colors.
+
+![result](https://cloud.githubusercontent.com/assets/453120/16435457/863c912e-3d6c-11e6-85a4-1c93f4340e2b.png)
+
+
 ##### Using Winston
 
 Formerly, this module encapsulated [winston](https://github.com/flatiron/winston), a popular logger by [@indexzero](https://github.com/indexzero) and the gals/guys over at [Nodejitsu](https://www.nodejitsu.com/). Recently, we made Winston optional to make captains-log as lightweight as possible and reduce the number of `npm install`s and `require()`s necessary for its usage in other modules.
