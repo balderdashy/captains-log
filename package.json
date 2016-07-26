@@ -28,7 +28,6 @@
     "rc": "0.3.5"
   },
   "devDependencies": {
-    "fixture-stdout": "0.2.0",
-    "mocha": "2.5.3"
+    "mocha": "3.0.0-2"
   }
 }
