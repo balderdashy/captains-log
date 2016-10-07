@@ -23,7 +23,7 @@
     "url": "https://github.com/mikermcneil/captains-log/issues"
   },
   "dependencies": {
-    "colors": "0.6.2",
+    "chalk": "1.1.3",
     "lodash": "3.10.1",
     "rc": "1.0.1"
   },
