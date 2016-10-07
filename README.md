@@ -1,5 +1,7 @@
 # captains-log
 
+[![NPM version](https://badge.fury.io/js/captains-log.svg)](http://badge.fury.io/js/sails) &nbsp; [![Build Status](https://travis-ci.org/balderdashy/captains-log.svg?branch=master)](https://travis-ci.org/balderdashy/captains-log)
+
 Lightweight logger with a simple pass-through configuration for use with fancier logging libraries.  Used by the [Sails framework](http://github.com/balderdashy/sails).  Optional support for colorized output, custom prefixes, and log levels (using [npm's logging conventions](https://github.com/isaacs/npmlog#loglevelprefix-message-).)
 
 
