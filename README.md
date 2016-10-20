@@ -5,13 +5,13 @@
 Lightweight logger with a simple pass-through configuration for use with fancier logging libraries.  Used by the [Sails framework](http://github.com/balderdashy/sails).  Optional support for colorized output, custom prefixes, and log levels (using [npm's logging conventions](https://github.com/isaacs/npmlog#loglevelprefix-message-).)
 
 
-### Installation
+## Installation
 
 ```shell
 $ npm install captains-log
 ```
 
-### Usage
+## Usage
 
 ```javascript
 var log = require('captains-log')();
@@ -45,7 +45,7 @@ log.error();
 
 
 
-### Configuring a custom logger
+## Configuring a custom logger
 
 To use a different library, `overrides.custom` must already be instantiated and ready to go with (at minimum) an n-[ary](http://en.wikipedia.org/wiki/Arity) `.debug()` method.
 
@@ -115,6 +115,19 @@ var log = require('captains-log')({
 > That said, don't feel like you _have_ to use a custom logger if you want these sorts of notifications.  In fact, there are usually more straightforward ways to implement features like Slack, SMS, or email notifications.  For example, in Sails, consider customizing your `respones/serverError.js` file.
 
 
-### License
 
-MIT
+## Bugs &nbsp; [![NPM version](https://badge.fury.io/js/captains-log.svg)](http://npmjs.com/package/captains-log)
+
+To report a bug, [click here](http://sailsjs.com/bugs).
+
+
+## Contributing &nbsp; [![Build Status](https://travis-ci.org/balderdashy/captains-log.svg?branch=master)](https://travis-ci.org/balderdashy/captains-log)
+
+Please observe the guidelines and conventions laid out in the [Sails project contribution guide](http://sailsjs.com/contribute) when opening issues or submitting pull requests.
+
+[![NPM](https://nodei.co/npm/captains-log.png?downloads=true)](http://npmjs.com/package/captains-log)
+
+
+## License
+
+The [Sails framework](http://sailsjs.com) is free and open-source under the [MIT License](http://sailsjs.com/license).
