@@ -11,6 +11,7 @@ Lightweight logger with a simple pass-through configuration for use with fancier
 $ npm install captains-log
 ```
 
+
 ## Usage
 
 ```javascript
@@ -114,6 +115,11 @@ var log = require('captains-log')({
 >
 > That said, don't feel like you _have_ to use a custom logger if you want these sorts of notifications.  In fact, there are usually more straightforward ways to implement features like Slack, SMS, or email notifications.  For example, in Sails, consider customizing your `respones/serverError.js` file.
 
+
+
+## Help
+
+If you have further questions or are having trouble, click [here](http://sailsjs.com/support).
 
 
 ## Bugs &nbsp; [![NPM version](https://badge.fury.io/js/captains-log.svg)](http://npmjs.com/package/captains-log)
