@@ -3,6 +3,7 @@
  */
 
 var util = require('util');
+var _ = require('@sailshq/lodash');
 var rc = require('rc');
 var wrap = require('./lib/wrap');
 var configure = require('./lib/configure');
@@ -50,12 +51,13 @@ module.exports = function CaptainsLog(overrides) {
     //
     // We assume that at least something called
     // `logger.log` or `logger.debug` exists.
-    if (!logger.log) {
+    if (!_.isObject(logger) || !_.isFunction(logger.log)) {
       throw new Error(
-        'Unsupported logger override!\n' +
-        '(has no `.log()` or `.debug()` method.)'
+        'Unsupported logger override provided as `custom`!\n' +
+        '(has no `.log()` or `.debug()` method.)\n'+
+        'Here\'s what was passed in:\n'+util.inspect(logger,{depth:null})
       );
-    }
+    }//-•
 
     // Fill in the gaps for the required log methods with
     // reasonable guesses if the custom logger is missing any

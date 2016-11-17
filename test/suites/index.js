@@ -1,7 +1,7 @@
 /**
  * Dependencies
  */
-var _ = require('lodash');
+var _ = require('@sailshq/lodash');
 var StreamObserver = require('fixture-stdout');
 var expect = require('../assertions');
 var fixtures = require('../fixtures');
