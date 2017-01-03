@@ -130,7 +130,7 @@ To report a bug, [click here](http://sailsjs.com/bugs).
 
 ## Contributing &nbsp; [![Build Status](https://travis-ci.org/balderdashy/captains-log.svg?branch=master)](https://travis-ci.org/balderdashy/captains-log)
 
-Please observe the guidelines and conventions laid out in the [Sails project contribution guide](http://sailsjs.com/contribute) when opening issues or submitting pull requests.
+Please observe the guidelines and conventions laid out in the [Sails project contribution guide](http://sailsjs.com/documentation/contributing) when opening issues or submitting pull requests.
 
 [![NPM](https://nodei.co/npm/captains-log.png?downloads=true)](http://npmjs.com/package/captains-log)
 
