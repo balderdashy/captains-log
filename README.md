@@ -99,7 +99,7 @@ Formerly, this module encapsulated [winston](https://github.com/flatiron/winston
 
 But Winston is awesome!  And it's a great fit for many apps, giving you granular control over how log output is handled, including sending emails, logging to multiple transports, and other production-time concerns.
 
-To use boot up a captains-log that writes to Winston, do the following:
+To boot up a captains-log that writes to Winston, do the following:
 
 ```javascript
 var log = require('captains-log')({
@@ -112,9 +112,9 @@ var log = require('captains-log')({
 
 
 > ### Why use a custom logger?
-> It it can useful to configure a custom logger-- particularly for regulatory compliance and organizational requirements (i.e. if your company is using a particular logger in other apps.)  In the context of Sails, configuring a custom logger also allows you to intercept all log messages automatically created by the framework, which can be useful for setting up email notifications about errors and warnings.
+> It it can useful to configure a custom logger-- particularly for regulatory compliance and organizational requirements (i.e. if your company is using a particular logger in other apps.)  In the context of Sails, configuring a custom logger also allows you to intercept all log messages automatically created by the framework, which is a quick way to set up email notifications about errors and warnings.
 >
-> That said, don't feel like you _have_ to use a custom logger if you want these sorts of notifications.  In fact, there are usually more straightforward ways to implement features like Slack, SMS, or email notifications.  For example, in Sails, consider customizing your `respones/serverError.js` file.
+> That said, don't feel like you _have_ to use a custom logger if you want these sorts of notifications.  In fact, there are usually more straightforward ways to implement features like Slack, SMS, or email notifications.  For example, in Sails, consider customizing your `responses/serverError.js` file.  Or check out a product like [Papertrail](https://papertrailapp.com/).
 
 
 
@@ -137,4 +137,4 @@ Please observe the guidelines and conventions laid out in the [Sails project con
 
 ## License
 
-The [Sails framework](http://sailsjs.com) is free and open-source under the [MIT License](http://sailsjs.com/license).
+This package, like the [Sails framework](http://sailsjs.com), is free and open-source under the [MIT License](http://sailsjs.com/license).
