@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mikermcneil/captains-log.git"
+    "url": "git://github.com/sailshq/captains-log.git"
   },
   "keywords": [
     "log",
@@ -20,7 +20,7 @@
   "author": "Mike McNeil",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mikermcneil/captains-log/issues"
+    "url": "https://github.com/sailshq/captains-log/issues"
   },
   "dependencies": {
     "chalk": "1.1.3",
