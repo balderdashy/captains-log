@@ -1,6 +1,6 @@
 {
   "name": "captains-log",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Lightweight logger with a simple pass-through configuration for use with fancier logging libraries",
   "main": "index.js",
   "scripts": {
