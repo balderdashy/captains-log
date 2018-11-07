@@ -51,7 +51,7 @@ module.exports = function CaptainsLog(overrides) {
     //
     // We assume that at least something called
     // `logger.log` or `logger.debug` exists.
-    if (!_.isObject(logger) || !_.isFunction(logger.log)) {
+    if (!_.isObject(logger) || (!_.isFunction(logger.log) && !_.isFunction(logger.debug))) {
       throw new Error(
         'Unsupported logger override provided as `custom`!\n' +
         '(has no `.log()` or `.debug()` method.)\n'+
