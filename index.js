@@ -63,16 +63,15 @@ module.exports = function CaptainsLog(overrides) {
     // reasonable guesses if the custom logger is missing any
     // (only required method is `logger.log` or `logger.debug`)
     // If no reasonable alternative is possible, don't log
-    var nullLog = function() {};
 
-    logger.debug = logger.debug || nullLog;
-    logger.info = logger.info || nullLog;
-    logger.warn = logger.warn || logger.error || nullLog;
-    logger.error = logger.error || nullLog;
-    logger.crit = logger.crit || logger.error || nullLog;
-    logger.verbose = logger.verbose || nullLog;
-    logger.silly = logger.silly || nullLog;
-    logger.blank = logger.blank || nullLog;
+    logger.debug = logger.debug ? logger.debug.bind(logger) : _.noop;
+    logger.info = logger.info ? logger.info.bind(logger) : _.noop;
+    logger.error = logger.error ? logger.error.bind(logger) : _.noop;
+    logger.warn = logger.warn ? logger.warn.bind(logger) : (logger.error ? logger.error.bind(logger) : _.noop);
+    logger.crit = logger.crit ? logger.crit.bind(logger) : (logger.error ? logger.error.bind(logger) : _.noop);
+    logger.verbose = logger.verbose ? logger.verbose.bind(logger) : _.noop;
+    logger.silly = logger.silly ? logger.silly.bind(logger) : _.noop;
+    logger.blank = logger.blank ? logger.blank.bind(logger) : _.noop;
   }
 
   // Make logger callable and stuff (wrap it)
