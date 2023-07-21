@@ -26,7 +26,7 @@
     "@sailshq/lodash": "^3.10.2",
     "chalk": "1.1.3",
     "rc": "1.2.8",
-    "semver": "5.4.1"
+    "semver": "7.5.2"
   },
   "devDependencies": {
     "fixture-stdout": "0.2.1",
